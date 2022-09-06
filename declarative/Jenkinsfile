@@ -36,7 +36,7 @@ pipeline {
         stage('Update') {
             steps {
                 sh '''#!/bin/bash
-                        aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} 2> /dev/null
+                        # aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} 2> /dev/null
                         status=$?
                         if [[ status -eq 0  &&  ${DeleteStack} == "false" ]] ; then
                         aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
