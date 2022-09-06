@@ -5,7 +5,7 @@ pipeline {
             steps {
                 sh '''
                     #!/bin/bash
-                    aws cloudformation describe-stacks --region 'us-west-2' --stack-name params.StackName 2> /dev/null
+                    { aws cloudformation describe-stacks --region 'us-west-2' --stack-name params.StackName; } 2> /dev/null
                     status=$?
                     if [[ status -ne 0 ]] ; then 
                     aws cloudformation create-stack --stack-name ${params.StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
