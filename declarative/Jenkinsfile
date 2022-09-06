@@ -24,7 +24,7 @@ pipeline {
         stage('cloudformation') {
             steps {
                 sh '''#!/bin/bash
-                        echo ${DanishTestStack}
+                        echo ${StackName}
                 '''
               }
              }
