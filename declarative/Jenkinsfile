@@ -30,7 +30,7 @@ pipeline {
                         aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
                         aws cloudformation wait stack-create-complete --region 'us-west-2' --stack-name  ${StackName};
                         echo "Created"
-                        elif [[ status == 0 ]] && [[ ${DeleteStack} == "false" ]] ; then
+                        elif [ status -eq 0 ] && [[ ${DeleteStack} == "false" ]] ; then
                         aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
                         aws cloudformatio wait stack-update-complete --region 'us-west-2' --stack-name  ${StackName};
                         echo "Updated"
