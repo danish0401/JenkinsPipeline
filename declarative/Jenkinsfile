@@ -35,8 +35,8 @@ pipeline {
                         aws cloudformatio wait stack-update-complete --region 'us-west-2' --stack-name  ${StackName};
                         echo "Updated"
                         else
-                        aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; fi
-                        echo "Deleted"
+                        aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
+                        echo "Deleted" ; fi
                 '''
               }
         }
