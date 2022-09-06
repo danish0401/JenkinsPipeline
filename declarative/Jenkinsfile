@@ -38,7 +38,9 @@ pipeline {
               }
              }
         stage('test') {
-            echo ${DeleteStack}
+            steps {
+                sh '''echo ${DeleteStack}'''
+            }
         }
             }
         }
