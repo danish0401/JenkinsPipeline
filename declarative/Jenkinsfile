@@ -37,5 +37,8 @@ pipeline {
                 '''
               }
              }
+        stage('test') {
+            echo ${DeleteStack}
+        }
             }
         }
