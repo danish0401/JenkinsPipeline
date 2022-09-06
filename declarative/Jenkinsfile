@@ -1,6 +1,26 @@
 pipeline {
     agent any
     stages {
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                            booleanParam(
+                                defaultValue: false, 
+                                description: '', 
+                                name: 'DeleteStack'
+                            ),
+                            string(
+                                defaultValue: 'DanishTestStack', 
+                                name: 'StackName', 
+                                trim: true
+                            )
+                        ])
+                    ])
+                }
+            }
+        }        
         stage('cloudformation') {
             steps {
                 sh '''#!/bin/bash
@@ -18,4 +38,4 @@ pipeline {
               }
              }
             }
-            }
+        }
