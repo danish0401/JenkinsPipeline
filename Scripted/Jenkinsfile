@@ -1,5 +1,4 @@
 node {
-    stages {
         stage('Setup parameters') {
             steps {
                 script { 
@@ -53,5 +52,4 @@ node {
                 '''
               }
         }                
-            }
-        }
+}
