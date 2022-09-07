@@ -27,6 +27,9 @@ pipeline {
             }
         }        
         stage('Create') {
+            when {
+                 environment(name: "DeleteStack", value: "false")
+            }
             steps {
                 sh '''#!/bin/bash
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
