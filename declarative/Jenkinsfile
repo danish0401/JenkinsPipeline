@@ -15,7 +15,12 @@ pipeline {
                                 defaultValue: 'DanishTestStack', 
                                 name: 'StackName', 
                                 trim: true
+                            ),
+                            string(
+                                name: 'StackS3BucketName'
+                                defaultValue: "DanishBucket"
                             )
+                            
                         ])
                     ])
                 }
@@ -27,7 +32,7 @@ pipeline {
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
                         if [[ status -ne 0 ]] ; then 
-                        aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
+                        aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName};
                         aws cloudformation wait stack-create-complete --region 'us-west-2' --stack-name  ${StackName};
                         echo "Created" ; fi
                 '''
