@@ -18,7 +18,7 @@ pipeline {
                             ),
                             string(
                                 name: 'StackS3BucketName',
-                                defaultValue: "DanishBucket"
+                                defaultValue: "danishbucket"
                             )
                             
                         ])
