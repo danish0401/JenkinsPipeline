@@ -48,7 +48,7 @@ pipeline {
         stage('Delete') {
             when {
                 // environment(name: "DeleteStack", value: "true")
-                expression { DeleteStack }
+                expression { ${DeleteStack} }
             }
             steps {
                 sh '''#!/bin/bash
