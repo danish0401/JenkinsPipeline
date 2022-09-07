@@ -8,7 +8,7 @@ node {
                             name: 'DeleteStack'
                         ),
                         string(
-                            defaultValue: 'DanishTestStack', 
+                            defaultValue: 'DanishTestStack2', 
                             name: 'StackName', 
                             trim: true
                         ),
