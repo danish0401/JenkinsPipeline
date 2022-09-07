@@ -41,12 +41,11 @@ node {
                     echo "Updated" ; fi
             '''
         }
-        if( ${DeleteStack} == "true" ){
         stage('Delete') {
             sh '''#!/bin/bash
                     if [[ ${DeleteStack} == "true" ]] ; then
                     aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
                     echo "Deleted" ; fi
             '''
-        }      }          
+        }                
 }
