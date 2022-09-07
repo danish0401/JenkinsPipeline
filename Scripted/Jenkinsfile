@@ -1,0 +1,57 @@
+node {
+    stages {
+        stage('Setup parameters') {
+            steps {
+                script { 
+                    properties([
+                        parameters([
+                            booleanParam(
+                                defaultValue: false, 
+                                description: '', 
+                                name: 'DeleteStack'
+                            ),
+                            string(
+                                defaultValue: 'DanishTestStack', 
+                                name: 'StackName', 
+                                trim: true
+                            )
+                        ])
+                    ])
+                }
+            }
+        }        
+        stage('Create') {
+            steps {
+                sh '''#!/bin/bash
+                        aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
+                        status=$?
+                        if [[ status -ne 0 ]] ; then 
+                        aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2';
+                        aws cloudformation wait stack-create-complete --region 'us-west-2' --stack-name  ${StackName};
+                        echo "Created" ; fi
+                '''
+              }
+        }
+        stage('Update') {
+            steps {
+                sh '''#!/bin/bash
+                        aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
+                        status=$?
+                        if [[ status -eq 0  &&  ${DeleteStack} == "false" ]] ; then
+                        aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' 2> /dev/null;
+                        #sleep 30
+                        echo "Updated" ; fi
+                '''
+              }
+        }
+        stage('Delete') {
+            steps {
+                sh '''#!/bin/bash
+                        if [[ ${DeleteStack} == "true" ]] ; then
+                        aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
+                        echo "Deleted" ; fi
+                '''
+              }
+        }                
+            }
+        }
