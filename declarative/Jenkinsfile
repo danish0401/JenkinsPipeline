@@ -47,7 +47,7 @@ pipeline {
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
                         if [[ status -eq 0 ]] ; then
-                        aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' 2> /dev/null;
+                        aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName} 2> /dev/null;
                         #sleep 30
                         echo "Updated" ; fi
                 '''
