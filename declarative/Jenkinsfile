@@ -34,9 +34,6 @@ pipeline {
               }
         }
         stage('Update') {
-            when {
-                changeset "Jenkinsfile"
-            }
             steps {
                 sh '''#!/bin/bash
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
@@ -49,11 +46,14 @@ pipeline {
               }
         }
         stage('Delete') {
+            when {
+                environment(name: "DeleteStack", value: "true")
+            }
             steps {
                 sh '''#!/bin/bash
-                        if [[ ${DeleteStack} == "true" ]] ; then
+                        #if [[ ${DeleteStack} == "true" ]] ; then
                         aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
-                        echo "Deleted" ; fi
+                        echo "Deleted" ; #fi
                 '''
               }
         }                
