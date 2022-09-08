@@ -71,7 +71,8 @@ pipeline {
             steps {
                 sh '''#!/bin/bash
                         aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
-                        echo "Deleted" ; 
+                        echo "Deleted" ;
+                        echo "Test" ; 
                 '''
               }
         }                
