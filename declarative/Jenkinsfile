@@ -41,7 +41,7 @@ pipeline {
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
                         if [[ status -ne 0 ]] ; then 
-                        aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket4518.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName};
+                        aws cloudformation create-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName};
                         aws cloudformation wait stack-create-complete --region 'us-west-2' --stack-name  ${StackName};
                         echo "Created" ; fi
                 '''
@@ -56,7 +56,7 @@ pipeline {
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
                         if [[ status -eq 0 ]] ; then
-                        aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket4518.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName} ;
+                        aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName} ;
                         #sleep 30
                         echo "Updated" ; fi
                 '''
@@ -79,7 +79,7 @@ pipeline {
         always{
             slackSend channel: 'danishjenkinstest',
                     color: COLOR_MAP[currentBuild.currentResult],
-                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} "
+                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
         }
     }
 
