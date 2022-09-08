@@ -6,7 +6,7 @@ def call(result){
     'FAILURE': 'danger'
 ]
     slackSend channel: 'danishjenkinstest',
-                    color: COLOR_MAP[result],
-                    message: "Status : *${result}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
+                    color: COLOR_MAP[currentBuild.currentResult],
+                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
 }
 
