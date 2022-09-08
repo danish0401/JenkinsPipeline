@@ -79,7 +79,7 @@ pipeline {
         always{
             slackSend channel: 'danishjenkinstest',
                     color: COLOR_MAP[currentBuild.currentResult],
-                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} by ${BUILD_USER}"
+                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} by ${env.BUILD_USER}"
         }
     }
 
