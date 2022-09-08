@@ -1,4 +1,4 @@
-def call(result){
+def call(){
 
     def COLOR_MAP = [
     'SUCCESS': 'good',
