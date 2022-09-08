@@ -37,6 +37,7 @@ pipeline {
                  environment(name: "DeleteStack", value: "false")
             }
             steps {
+                sh cdk
                 sh '''#!/bin/bash
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
