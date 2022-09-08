@@ -20,7 +20,7 @@ node {
                     ])
                 ])
         }
-        if ( params.DeleteStack ){
+        if ( ! params.DeleteStack ){
         stage('Create') {
             sh '''#!/bin/bash
                     aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
