@@ -1,3 +1,10 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'ABORTED': 'warning',
+    'FAILURE': 'danger'
+]
+
+
 node {  
         stage('Parameters Setup'){
                 properties([
@@ -35,7 +42,7 @@ node {
             sh '''#!/bin/bash
                     aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                     status=$?
-                    if [[ status -eq 0  &&  ${DeleteStack} == "false" ]] ; then
+                    if [[ status -eq 0 ]] ; then
                     aws cloudformation update-stack --stack-name ${StackName} --template-url https://danishbucket458.s3.us-west-2.amazonaws.com/s3cft.yml --region 'us-west-2' --parameters ParameterKey=BucketName,ParameterValue=${StackS3BucketName} 2> /dev/null;
                     #sleep 30
                     echo "Updated" ; fi
@@ -44,9 +51,16 @@ node {
         else{
         stage('Delete') {
             sh '''#!/bin/bash
-                    if [[ ${DeleteStack} == "true" ]] ; then
                     aws cloudformation delete-stack --stack-name ${StackName} --region 'us-west-2'; 
-                    echo "Deleted" ; fi
+                    echo "Deleted" ;
             '''
-        }    }            
+        } }
+
+    post {
+        always{
+            slackSend channel: 'danishjenkinstest',
+                    color: COLOR_MAP[currentBuild.currentResult],
+                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
+        }
+    }      
 }
