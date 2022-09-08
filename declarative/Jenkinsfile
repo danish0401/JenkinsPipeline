@@ -38,7 +38,7 @@ pipeline {
                  environment(name: "DeleteStack", value: "false")
             }
             steps {
-                sh cdk
+                //sh cdk
                 sh '''#!/bin/bash
                         aws cloudformation describe-stacks --region 'us-west-2' --stack-name ${StackName} &> /dev/null
                         status=$?
@@ -79,11 +79,8 @@ pipeline {
 
     post {
         always{
-
-            slack()            
-            // slackSend channel: 'danishjenkinstest',
-            //         color: COLOR_MAP[currentBuild.currentResult],
-            //         message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
+            // calling shared Lib 
+            slack()                       
         }
     }
 
