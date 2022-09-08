@@ -1,8 +1,9 @@
-def COLOR_MAP = [
-    'SUCCESS': 'good',
-    'ABORTED': 'warning',
-    'FAILURE': 'danger'
-]
+// def COLOR_MAP = [
+//     'SUCCESS': 'good',
+//     'ABORTED': 'warning',
+//     'FAILURE': 'danger'
+// ]
+@Library('slack-shared-lib') _
 
 pipeline {
     agent any
@@ -78,9 +79,11 @@ pipeline {
 
     post {
         always{
-            slackSend channel: 'danishjenkinstest',
-                    color: COLOR_MAP[currentBuild.currentResult],
-                    message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
+
+            slack(currentBuild.currentResult)            
+            // slackSend channel: 'danishjenkinstest',
+            //         color: COLOR_MAP[currentBuild.currentResult],
+            //         message: "Status : *${currentBuild.currentResult}:* \n Job name: ${env.JOB_NAME} build no. : ${env.BUILD_NUMBER} \n\n For more Information: ${env.BUILD_URL}"
         }
     }
 
